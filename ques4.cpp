@@ -1,0 +1,55 @@
+/*
+Name: Bani
+Roll No: 102403190
+Question 4: Determine if a binary tree is a BST
+*/
+
+#include <iostream>
+#include limits>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    
+    Node(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+bool isBSTUtil(Node* root, int minVal, int maxVal) {
+    if (root == NULL) return true;
+    
+    if (root->data < minVal || root->data > maxVal) {
+        return false;
+    }
+    
+    return isBSTUtil(root->left, minVal, root->data - 1) &&
+           isBSTUtil(root->right, root->data + 1, maxVal);
+}
+
+bool isBST(Node* root) {
+    return isBSTUtil(root, INT_MIN, INT_MAX);
+}
+
+int main() {
+    /
+    Node* root1 = new Node(50);
+    root1->left = new Node(30);
+    root1->right = new Node(70);
+    root1->left->left = new Node(20);
+    root1->left->right = new Node(40);
+    
+    cout << "Tree 1 is BST: " << (isBST(root1) ? "Yes" : "No") << endl;
+    Node* root2 = new Node(50);
+    root2->left = new Node(30);
+    root2->right = new Node(70);
+    root2->left->left = new Node(60);  
+    
+    cout << "Tree 2 is BST: " << (isBST(root2) ? "Yes" : "No") << endl;
+    
+    return 0;
+}
